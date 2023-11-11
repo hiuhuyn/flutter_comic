@@ -8,10 +8,12 @@ class _ApiNettruyenService implements ApiNettruyenService {
 
   @override
   Future<HttpResponse<ComicListEntity>> getBoyOrGirlComics(
-      {required bool isBoy, int page = 1}) async {
+      {required bool isBoy, int? page}) async {
     //pass
     String sex = isBoy ? "boy" : "girl";
-    final result = await dio.get("$kBaseURL/$sex-comics?page=$page");
+    String api = "$kBaseURL/$sex-comics";
+    api += page != null ? "?page=$page" : "?page=1";
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
@@ -31,10 +33,15 @@ class _ApiNettruyenService implements ApiNettruyenService {
 
   @override
   Future<HttpResponse<ComicListEntity>> getComicByGenre(
-      {String genreId = "all", int page = 1, String status = "all"}) async {
+      {String? genreId, int? page, String? status}) async {
     //pass
-    final result =
-        await dio.get("$kBaseURL/genres/$genreId?page=$page&status=$status");
+    String api = "$kBaseURL/genres/";
+    api += genreId ?? "all";
+    api += page != null ? "?page=$page" : "?page=1";
+    if (status != null) {
+      api += "&status=$status";
+    }
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
 
     return HttpResponse(value, result);
@@ -51,9 +58,11 @@ class _ApiNettruyenService implements ApiNettruyenService {
 
   @override
   Future<HttpResponse<ComicListEntity>> getComicsSearch(
-      {required String query, int page = 1}) async {
+      {required String query, int? page}) async {
     //pass
-    final result = await dio.get("$kBaseURL/search?q=$query&page=$page");
+    String api = "$kBaseURL/search?q=$query";
+    api += page != null ? "&page=$page" : "&page=1";
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
@@ -71,10 +80,12 @@ class _ApiNettruyenService implements ApiNettruyenService {
   }
 
   @override
-  Future<HttpResponse<ComicListEntity>> getCompletedComics(
-      {int page = 1}) async {
+  Future<HttpResponse<ComicListEntity>> getCompletedComics({int? page}) async {
     // pass
-    final result = await dio.get("$kBaseURL/completed-comics?page=$page");
+    String api = "$kBaseURL/completed-comics";
+    api += page != null ? "?page=$page" : "?page=1";
+
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
@@ -102,20 +113,30 @@ class _ApiNettruyenService implements ApiNettruyenService {
 
   @override
   Future<HttpResponse<ComicListEntity>> getNewComics(
-      {int page = 1, String status = "all"}) async {
+      {int? page, String? status}) async {
     // pass
-    final result =
-        await dio.get("$kBaseURL/new-comics?page=$page&status=$status");
+    String api = "$kBaseURL/new-comics";
+    api += page != null ? "?page=$page" : "?page=1";
+    if (status != null) {
+      api += "&status=$status";
+    }
+
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
 
   @override
   Future<HttpResponse<ComicListEntity>> getRecentUpdateComics(
-      {int page = 1, String status = "all"}) async {
+      {int? page, String? status}) async {
     // pass
-    final result = await dio
-        .get("$kBaseURL/recent-update-comics?page=$page&status=$status");
+    String api = "$kBaseURL/recent-update-comics";
+    api += page != null ? "?page=$page" : "?page=1";
+    if (status != null) {
+      api += "&status=$status";
+    }
+
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
@@ -133,30 +154,30 @@ class _ApiNettruyenService implements ApiNettruyenService {
 
   @override
   Future<HttpResponse<ComicListEntity>> getTopComics(
-      {int page = 1, String status = "all"}) async {
+      {String? topType, int? page, String? status}) async {
     // pass
-    final result = await dio.get("$kBaseURL/top?page=$page&status=$status");
-    final value = ComicListModel.fromMap(result.data);
+    String api = "";
+    if (topType != null) {
+      api = "$kBaseURL/top/$topType";
+    } else {
+      api = "$kBaseURL/top";
+    }
+    api += page != null ? "?page=$page" : "?page=1";
+    if (status != null) {
+      api += "&status=$status";
+    }
 
+    final result = await dio.get(api);
+    final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }
 
   @override
-  Future<HttpResponse<ComicListEntity>> getTopTypeComics(
-      {required String topType, int page = 1, String status = "all"}) async {
+  Future<HttpResponse<ComicListEntity>> getTrendingComics({int? page}) async {
     // pass
-    final result =
-        await dio.get("$kBaseURL/top/$topType?page=$page&status=$status");
-    final value = ComicListModel.fromMap(result.data);
-
-    return HttpResponse(value, result);
-  }
-
-  @override
-  Future<HttpResponse<ComicListEntity>> getTrendingComics(
-      {int page = 1}) async {
-    // pass
-    final result = await dio.get("$kBaseURL/trending-comics?page=$page");
+    String api = "$kBaseURL/trending-comics";
+    api += page != null ? "?page=$page" : "?page=1";
+    final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
     return HttpResponse(value, result);
   }

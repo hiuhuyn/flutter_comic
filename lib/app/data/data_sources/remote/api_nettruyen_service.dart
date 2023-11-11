@@ -18,30 +18,19 @@ part 'api_nettruyen_service.g.dart';
 abstract class ApiNettruyenService {
   factory ApiNettruyenService({Dio? dio}) = _ApiNettruyenService;
 
-  static const String typeDaily = "daily";
-  static const String typeMonthly = "monthly";
-  static const String typeChapter = "chapter";
-  static const String typeFollow = "follow";
-  static const String typeWeekly = "weekly";
-  static const String typeComment = "comment";
-
-  static const String statusAll = "all"; // tất cả
-  static const String statusCompleted = "completed"; // đã hoàn thành
-  static const String statusOngoing = "ongoing"; // đang diễn ra
-
   @GET("/genres")
   Future<HttpResponse<List<GenreEntity>>> getGenres();
 
   @GET("/genres/{genre_id}?page={page}&status={status}")
   Future<HttpResponse<ComicListEntity>> getComicByGenre(
-      {String genreId = "all", int page = 1, String status = "all"});
+      {String? genreId, int? page, String? status});
 
   @GET("/trending-comics")
-  Future<HttpResponse<ComicListEntity>> getTrendingComics({int page = 1});
+  Future<HttpResponse<ComicListEntity>> getTrendingComics({int? page});
 
   @GET("/search?q={query}&page={page}")
   Future<HttpResponse<ComicListEntity>> getComicsSearch(
-      {required String query, int page = 1});
+      {required String query, int? page});
 
   @GET("/search-suggest?q={query}")
   Future<HttpResponse<List<ComicEntity>>> getComicsSearchSuggest(
@@ -52,19 +41,19 @@ abstract class ApiNettruyenService {
 
   @GET("/new-comics?page={page}&status={status}")
   Future<HttpResponse<ComicListEntity>> getNewComics(
-      {int page = 1, String status = "all"});
+      {int? page, String? status});
 
   @GET("/recent-update-comics?page={page}&status={status}")
   Future<HttpResponse<ComicListEntity>> getRecentUpdateComics(
-      {int page = 1, String status = "all"});
+      {int? page, String? status});
 
   @GET("/boy-comics?page={page}")
   @GET("/girl-comics?page={page}")
   Future<HttpResponse<ComicListEntity>> getBoyOrGirlComics(
-      {required bool isBoy, int page = 1});
+      {required bool isBoy, int? page});
 
   @GET("/completed-comics?page={page}")
-  Future<HttpResponse<ComicListEntity>> getCompletedComics({int page = 1});
+  Future<HttpResponse<ComicListEntity>> getCompletedComics({int? page});
 
   @GET("/comics/{comic_id}")
   Future<HttpResponse<ComicEntity>> getComicById({required String comicId});
@@ -79,9 +68,5 @@ abstract class ApiNettruyenService {
 
   @GET("/top?page={page}&status={status}")
   Future<HttpResponse<ComicListEntity>> getTopComics(
-      {int page = 1, String status = "all"});
-
-  @GET("/top/{type}?page={page}&status={status}")
-  Future<HttpResponse<ComicListEntity>> getTopTypeComics(
-      {required String topType, int page = 1, String status = "all"});
+      {String? topType, int? page, String? status});
 }

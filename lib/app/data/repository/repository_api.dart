@@ -9,6 +9,7 @@ import 'package:nettruyen/app/domain/models/content_chapter.dart';
 import 'package:nettruyen/app/domain/models/genre.dart';
 import 'package:nettruyen/app/domain/repository/repository_api.dart';
 import 'package:nettruyen/core/resources/data_state.dart';
+import 'package:retrofit/dio.dart';
 
 class RepositoryApiImpl implements RepositoryApi {
   late ApiNettruyenService service;
@@ -18,7 +19,7 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getBoyOrGirlComics(
-      {required bool isBoy, int page = 1}) async {
+      {required bool isBoy, int? page}) async {
     try {
       final httpReponse =
           await service.getBoyOrGirlComics(isBoy: isBoy, page: page);
@@ -65,7 +66,7 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getComicByGenre(
-      {String genreId = "all", int page = 1, String status = "all"}) async {
+      {String? genreId, int? page, String? status}) async {
     try {
       final httpReponse = await service.getComicByGenre(
           genreId: genreId, page: page, status: status);
@@ -111,7 +112,7 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getComicsSearch(
-      {required String query, int page = 1}) async {
+      {required String query, int? page}) async {
     try {
       final httpReponse =
           await service.getComicsSearch(query: query, page: page);
@@ -157,7 +158,7 @@ class RepositoryApiImpl implements RepositoryApi {
   }
 
   @override
-  Future<DataState<ComicListEntity>> getCompletedComics({int page = 1}) async {
+  Future<DataState<ComicListEntity>> getCompletedComics({int? page}) async {
     try {
       final httpReponse = await service.getCompletedComics(page: page);
       if (httpReponse.response.statusCode == HttpStatus.ok) {
@@ -226,7 +227,7 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getNewComics(
-      {int page = 1, String status = "all"}) async {
+      {int? page, String? status}) async {
     try {
       final httpReponse =
           await service.getNewComics(page: page, status: status);
@@ -250,7 +251,7 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getRecentUpdateComics(
-      {int page = 1, String status = "all"}) async {
+      {int? page, String? status}) async {
     try {
       final httpReponse =
           await service.getRecentUpdateComics(page: page, status: status);
@@ -296,34 +297,11 @@ class RepositoryApiImpl implements RepositoryApi {
 
   @override
   Future<DataState<ComicListEntity>> getTopComics(
-      {int page = 1, String status = "all"}) async {
+      {String? topType, int? page, String? status}) async {
     try {
-      final httpReponse =
-          await service.getTopComics(page: page, status: status);
-      if (httpReponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpReponse.data);
-      } else {
-        return DataFailed(DioException(
-            message:
-                "Faild getTopComics StatusCode = ${httpReponse.response.statusCode}",
-            error: httpReponse.response.statusCode,
-            requestOptions: httpReponse.response.requestOptions));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    } catch (e) {
-      return DataFailed(DioException(
-          requestOptions: RequestOptions(),
-          message: "Exception getTopComics: ${e.toString()}"));
-    }
-  }
+      final HttpResponse<ComicListEntity> httpReponse = await service
+          .getTopComics(topType: topType, page: page, status: status);
 
-  @override
-  Future<DataState<ComicListEntity>> getTopTypeComics(
-      {required String topType, int page = 1, String status = "all"}) async {
-    try {
-      final httpReponse = await service.getTopTypeComics(
-          topType: topType, page: page, status: status);
       if (httpReponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpReponse.data);
       } else {
@@ -343,7 +321,7 @@ class RepositoryApiImpl implements RepositoryApi {
   }
 
   @override
-  Future<DataState<ComicListEntity>> getTrendingComics({int page = 1}) async {
+  Future<DataState<ComicListEntity>> getTrendingComics({int? page}) async {
     try {
       final httpReponse = await service.getTrendingComics(page: page);
       if (httpReponse.response.statusCode == HttpStatus.ok) {
