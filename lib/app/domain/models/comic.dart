@@ -10,8 +10,8 @@ class ComicEntity extends Equatable {
   String? title;
   String? thumbnail;
   String? description;
-  String? short_description; //
-  bool? is_trending = false; //
+  String? short_description;
+  bool? is_trending = false;
   String? updated_at; //
   String? authors;
   String? status;

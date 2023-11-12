@@ -1,6 +1,6 @@
 # nettruyen
 
-Use clean architecture and block to build a story reading application.
+Use clean architecture and bloc to build a story reading application.
 
 ## Api
 

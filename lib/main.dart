@@ -1,125 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/chapter/chapter_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_by_genre_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/completed_comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/girl_comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/new_comic.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/recent_update_comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/recommend_comics_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/search_comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/search_suggest_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/top_comics_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/trending_comics_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/genre/genre_bloc.dart';
+import 'package:nettruyen/config/routes/custome_route.dart';
+import 'package:nettruyen/setup.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initlizeDependencies();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BoyComicBloc>(
+          create: (context) => sl()..add(GetBoyOrGirlComicsEvent(isBoy: true)),
         ),
+        BlocProvider<GirlComicBloc>(
+          create: (context) => sl()..add(GetBoyOrGirlComicsEvent(isBoy: false)),
+        ),
+        BlocProvider<ComicBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<ComicByGenreBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<CompletedComicBloc>(
+          create: (context) => sl()..add(GetCompletedComicsEvent()),
+        ),
+        BlocProvider<NewComicsBloc>(
+          create: (context) => sl()..add(GetNewComicsEvent()),
+        ),
+        BlocProvider<RecentUpdateComicsBloc>(
+          create: (context) => sl()..add(GetRecentUpdateComicsEvent()),
+        ),
+        BlocProvider<RecommendComicsBloc>(
+          create: (context) => sl()..add(GetRecommendComicsEvent()),
+        ),
+        BlocProvider<SearchComicBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<SearchSuggestComicBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<TopComicsBloc>(
+          create: (context) => sl()..add(GetTopComicsEvent()),
+        ),
+        BlocProvider<TrendingComicsBloc>(
+          create: (context) => sl()..add(GetTrendingComicsEvent()),
+        ),
+        BlocProvider<GenreBloc>(create: (context) => sl()),
+        BlocProvider<ChapterBloc>(create: (context) => sl()),
+      ],
+      child: MaterialApp(
+        title: 'Nettruyen',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        onGenerateRoute: (settings) => CustomeRoute.generate(settings),
+        initialRoute: "/",
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -85,7 +85,12 @@ class ComicModel extends ComicEntity {
       authorMap = authorMap.replaceAll('[', '');
       authorMap = authorMap.replaceAll(']', '');
     }
-
+    ChapterModel? lastChapter;
+    if (map['last_chapter'] != null) {
+      lastChapter = ChapterModel.fromMap(map['last_chapter']);
+    } else if (map['lastest_chapter'] != null) {
+      lastChapter = ChapterModel.fromMap(map['lastest_chapter']);
+    }
     return ComicModel(
       id: map["id"],
       title: map["title"],
@@ -99,9 +104,7 @@ class ComicModel extends ComicEntity {
       total_views: map['total_views'],
       followers: map['followers'],
       is_trending: map['is_trending'],
-      last_chapter: map['last_chapter'] != null
-          ? ChapterModel.fromMap(map['last_chapter'])
-          : null,
+      last_chapter: lastChapter,
       short_description: map['short_description'],
       updated_at: map['updated_at'],
       chapters: chapterListMap?.map((e) => ChapterModel.fromMap(e)).toList(),
