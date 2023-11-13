@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/chapter/chapter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_id_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_by_genre_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/completed_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/girl_comic_bloc.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<GirlComicBloc>(
           create: (context) => sl()..add(GetBoyOrGirlComicsEvent(isBoy: false)),
         ),
-        BlocProvider<ComicBloc>(
+        BlocProvider<ComicByIdBloc>(
           create: (context) => sl(),
         ),
         BlocProvider<ComicByGenreBloc>(

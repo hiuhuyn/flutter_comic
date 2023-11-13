@@ -20,7 +20,7 @@ import 'package:nettruyen/app/domain/usecases/remote/get_top_comics_usecase.dart
 import 'package:nettruyen/app/domain/usecases/remote/get_trending_comics_usecase.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/chapter/chapter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_id_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_by_genre_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/completed_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/girl_comic_bloc.dart';
@@ -44,6 +44,7 @@ Future<void> initlizeDependencies() async {
       () => ApiNettruyenService(dio: sl()));
   sl.registerLazySingleton<RepositoryApi>(
       () => RepositoryApiImpl(service: sl()));
+
   // use case
   sl.registerLazySingleton<GetBoyOrGirlComicsUsecase>(
       () => GetBoyOrGirlComicsUsecase(sl()));
@@ -97,7 +98,7 @@ Future<void> initlizeDependencies() async {
 
   sl.registerFactory<GirlComicBloc>(() => GirlComicBloc(sl()));
 
-  sl.registerFactory<ComicBloc>(() => ComicBloc(sl()));
+  sl.registerFactory<ComicByIdBloc>(() => ComicByIdBloc(sl()));
 
   sl.registerFactory<ComicByGenreBloc>(() => ComicByGenreBloc(sl()));
 

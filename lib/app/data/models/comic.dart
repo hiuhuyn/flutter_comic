@@ -80,10 +80,13 @@ class ComicModel extends ComicEntity {
     }
 
     String? authorMap;
+    print(map["authors"]);
     if (map['authors'] is List) {
       authorMap = List.from(map['authors']).toString();
       authorMap = authorMap.replaceAll('[', '');
       authorMap = authorMap.replaceAll(']', '');
+    } else {
+      authorMap = map["authors"];
     }
     ChapterModel? lastChapter;
     if (map['last_chapter'] != null) {

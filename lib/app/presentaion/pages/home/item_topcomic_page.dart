@@ -3,51 +3,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/domain/models/comic.dart';
 import 'package:nettruyen/app/domain/models/genre.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_by_genre_bloc.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/top_comics_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_state.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/genre/genre_bloc.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/genre/genre_event.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/genre/genre_state.dart';
 import 'package:nettruyen/app/presentaion/widgets/comic/item_comic_2.dart';
 import 'package:nettruyen/app/presentaion/widgets/failed_widget.dart';
 import 'package:nettruyen/app/presentaion/widgets/index_page.dart';
 import 'package:nettruyen/app/presentaion/widgets/loading_widget.dart';
 import 'package:nettruyen/core/constants/constants.dart';
-import 'package:nettruyen/setup.dart';
 
-class ItemGenrePage extends StatefulWidget {
-  const ItemGenrePage({super.key});
-  static void loading(BuildContext context) {
-    context.read<ComicByGenreBloc>().add(GetComicByGenreEvent());
-    context.read<GenreBloc>().add(GetGenresEvent());
-  }
+class ItemTopComicPage extends StatefulWidget {
+  const ItemTopComicPage({super.key});
 
   @override
-  State<ItemGenrePage> createState() => _ItemGenrePageState();
+  State<ItemTopComicPage> createState() => _ItemTopComicPageState();
 }
 
-class _ItemGenrePageState extends State<ItemGenrePage> {
+class _ItemTopComicPageState extends State<ItemTopComicPage> {
   StatusComic status = StatusComic.all;
-  GenreEntity genre = sl();
+  TopType topType = TopType.all;
   int totalPages = 1;
   int currentPage = 1;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ItemGenrePage.loading(context);
+    context.read<TopComicsBloc>().add(GetTopComicsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    var blocCommicState = context.watch<ComicByGenreBloc>().state;
+    var blocCommicState = context.watch<TopComicsBloc>().state;
     if (blocCommicState is ComicSuccesfull) {
       setState(() {
         totalPages = blocCommicState.listComic!.total_pages!;
         currentPage = blocCommicState.listComic!.current_page!;
       });
     }
-
     return Column(
       children: [
         ListTile(
@@ -59,8 +51,8 @@ class _ItemGenrePageState extends State<ItemGenrePage> {
                 setState(() {
                   status = value;
                 });
-                context.read<ComicByGenreBloc>().add(GetComicByGenreEvent(
-                    status: value.name, genreId: genre.id));
+                context.read<TopComicsBloc>().add(GetTopComicsEvent(
+                    status: value.name, topType: topType.name));
               }
             },
             items: const [
@@ -79,59 +71,26 @@ class _ItemGenrePageState extends State<ItemGenrePage> {
             ],
           ),
         ),
-        ListTile(
-          title: const Text("Thể loại:"),
-          trailing: BlocBuilder<GenreBloc, GenreState>(
-            builder: (context, state) {
-              if (state is GenreSuccessfull) {
-                List<DropdownMenuItem> listItemGenre = [];
-                for (var element in state.listGenre!) {
-                  listItemGenre.add(DropdownMenuItem(
-                      value: element.name,
-                      child: Text(
-                        element.name ?? "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )));
-                }
-                return DropdownButton(
-                    value: genre.name,
-                    onChanged: (value) {
-                      if (value != null) {
-                        setState(() {
-                          genre = state.listGenre!.firstWhere(
-                            (element) => element.name == value,
-                            orElse: () => sl(),
-                          );
-                        });
-
-                        context.read<ComicByGenreBloc>().add(
-                            GetComicByGenreEvent(
-                                genreId: genre.id, status: status.name));
-                      }
-                    },
-                    items: listItemGenre);
-              } else if (state is GenreFailed) {
-                return SizedBox(
-                  width: 30,
-                  child: Text(
-                    state.error!.message.toString(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                );
-              }
-              return const SizedBox(
-                width: 30,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
+        SizedBox(
+          height: 45,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              _itemTop(TopType.all, "Top all",
+                  icon: Icons.remove_red_eye_outlined),
+              _itemTop(TopType.daily, "Top ngày",
+                  icon: Icons.remove_red_eye_outlined),
+              _itemTop(TopType.weekly, "Top tuần",
+                  icon: Icons.remove_red_eye_outlined),
+              _itemTop(TopType.monthly, "Top tháng",
+                  icon: Icons.remove_red_eye_outlined),
+              _itemTop(TopType.follow, "Top theo dõi", icon: Icons.favorite),
+              _itemTop(TopType.comment, "Top bình luận", icon: Icons.comment),
+            ],
           ),
         ),
         Expanded(
-          child: BlocBuilder<ComicByGenreBloc, ComicState>(
+          child: BlocBuilder<TopComicsBloc, ComicState>(
             builder: (context, state) {
               if (state is ComicSuccesfull) {
                 List<ComicEntity> listComic = [];
@@ -158,8 +117,8 @@ class _ItemGenrePageState extends State<ItemGenrePage> {
         ),
         IndexPage(
           onValue: (index) {
-            context.read<ComicByGenreBloc>().add(GetComicByGenreEvent(
-                genreId: genre.id, status: status.name, page: index));
+            context.read<TopComicsBloc>().add(GetTopComicsEvent(
+                topType: topType.name, status: status.name, page: index));
           },
           totalPages: totalPages,
           currentPage: currentPage,
@@ -168,6 +127,47 @@ class _ItemGenrePageState extends State<ItemGenrePage> {
           height: 10,
         )
       ],
+    );
+  }
+
+  Widget _itemTop(TopType type, String name, {IconData? icon}) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          topType = type;
+          currentPage = 1;
+          context.read<TopComicsBloc>().add(
+              GetTopComicsEvent(topType: topType.name, status: status.name));
+        });
+      },
+      borderRadius: BorderRadius.circular(5),
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            border: Border.all(
+                width: 1, color: type == topType ? Colors.blue : Colors.grey),
+            color: type == topType ? Colors.blue : Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(5))),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Visibility(
+                visible: icon != null,
+                child: Icon(
+                  icon,
+                  color: type == topType ? Colors.white : Colors.grey,
+                  size: 20,
+                )),
+            Text(
+              name,
+              style: TextStyle(
+                  fontSize: 15,
+                  color: type == topType ? Colors.white : Colors.black),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

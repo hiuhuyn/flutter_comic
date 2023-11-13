@@ -19,7 +19,7 @@ class TrendingComicsBloc extends Bloc<ComicEvent, ComicState> {
     if (dataState is DataSuccess) {
       emit(ComicSuccesfull(listComic: dataState.data));
     } else {
-      emit(ComicFailed(error: dataState.error));
+      emit(ComicFailed(error: dataState.error!));
     }
   }
 }

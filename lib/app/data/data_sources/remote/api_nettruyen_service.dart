@@ -10,6 +10,7 @@ import 'package:nettruyen/app/domain/models/comic_list.dart';
 import 'package:nettruyen/app/domain/models/content_chapter.dart';
 import 'package:nettruyen/app/domain/models/genre.dart';
 import 'package:nettruyen/core/constants/api.dart';
+import 'package:nettruyen/core/constants/constants.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_nettruyen_service.g.dart';

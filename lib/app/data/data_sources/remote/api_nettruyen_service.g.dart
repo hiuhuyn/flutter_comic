@@ -157,7 +157,7 @@ class _ApiNettruyenService implements ApiNettruyenService {
       {String? topType, int? page, String? status}) async {
     // pass
     String api = "";
-    if (topType != null) {
+    if (topType != null && topType != TopType.all.name) {
       api = "$kBaseURL/top/$topType";
     } else {
       api = "$kBaseURL/top";

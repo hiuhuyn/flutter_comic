@@ -5,9 +5,9 @@ import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_state.dart';
 import 'package:nettruyen/core/resources/data_state.dart';
 
-class ComicBloc extends Bloc<ComicEvent, ComicState> {
+class ComicByIdBloc extends Bloc<ComicEvent, ComicState> {
   GetComicByIdUsecase usecase;
-  ComicBloc(this.usecase) : super(ComicLoading()) {
+  ComicByIdBloc(this.usecase) : super(ComicLoading()) {
     on<GetComicByIdEvent>(onGet);
   }
 
@@ -18,7 +18,7 @@ class ComicBloc extends Bloc<ComicEvent, ComicState> {
     if (dataState is DataSuccess) {
       emit(ComicSuccesfull(comic: dataState.data));
     } else {
-      emit(ComicFailed(error: dataState.error));
+      emit(ComicFailed(error: dataState.error!));
     }
   }
 }

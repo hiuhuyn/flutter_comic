@@ -45,5 +45,5 @@ class ComicSuccesfull extends ComicState {
 }
 
 class ComicFailed extends ComicState {
-  ComicFailed({super.error});
+  ComicFailed({required DioException error}) : super(error: error);
 }
