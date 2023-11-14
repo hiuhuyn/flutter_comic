@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            "Nettruyen clone",
+            "Đọc truyện miễn phí",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: Colors.amber[700], fontWeight: FontWeight.bold),
           ),

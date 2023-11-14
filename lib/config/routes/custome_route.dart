@@ -38,7 +38,7 @@ class CustomeRoute {
         if (comic != null && chapter != null) {
           return MaterialPageRoute(
               builder: (context) =>
-                  ChapterComicPage(comicId: comic, chapterId: chapter),
+                  ChapterComicPage(comic: comic, chapter: chapter),
               settings: settings);
         }
       } catch (e) {

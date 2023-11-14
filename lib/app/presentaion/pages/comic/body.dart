@@ -21,7 +21,6 @@ class _BodyComicPageState extends State<BodyComicPage> {
     super.initState();
     if (widget.comic.chapters != null) {
       int lengthChapters = widget.comic.chapters!.length;
-      print(lengthChapters);
       if (lengthChapters < 50) {
         listRanges.add(_itemChapter(0, lengthChapters));
         setState(() {
@@ -112,7 +111,7 @@ class _BodyComicPageState extends State<BodyComicPage> {
             range = end - 1;
             range = widget.comic.chapters!.length - range;
           } else {
-            itemCount = end - start - 1;
+            itemCount = end - start + 1;
             range = widget.comic.chapters!.length - end;
           }
         });

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nettruyen/app/domain/models/comic.dart';
-import 'package:nettruyen/app/presentaion/widgets/image_custome.dart';
+import 'package:nettruyen/app/presentaion/widgets/image_custome/image_custome.dart';
 import 'package:nettruyen/config/routes/routes_name.dart';
 
 class ItemComic1 extends StatefulWidget {

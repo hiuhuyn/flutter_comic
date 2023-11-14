@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nettruyen/app/domain/models/comic.dart';
-import 'package:nettruyen/app/presentaion/widgets/image_custome.dart';
+import 'package:nettruyen/app/presentaion/widgets/image_custome/image_custome.dart';
 import 'package:nettruyen/config/routes/routes_name.dart';
 
 class HeadingComic extends StatefulWidget {
@@ -40,7 +40,6 @@ class _HeadingComicState extends State<HeadingComic> {
       List<Widget> listOther = [];
       for (var element in widget.comic.genres!) {
         String value = element.name!;
-
         listOther.add(Container(
           padding: const EdgeInsets.all(3),
           margin: const EdgeInsets.all(3),

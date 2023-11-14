@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ChapterBloc>(create: (context) => sl()),
       ],
       child: MaterialApp(
-        title: 'Nettruyen',
+        title: 'Comic free',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
