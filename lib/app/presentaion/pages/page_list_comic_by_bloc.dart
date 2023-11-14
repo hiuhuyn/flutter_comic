@@ -5,7 +5,7 @@ import 'package:nettruyen/app/domain/models/comic.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/completed_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/girl_comic_bloc.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/new_comic.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/recent_update_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/trending_comics_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_state.dart';
@@ -39,8 +39,8 @@ class _PageListComicByBlocState extends State<PageListComicByBloc> {
         return context.watch<TrendingComicsBloc>().state;
       case CompletedComicBloc:
         return context.watch<CompletedComicBloc>().state;
-      case NewComicsBloc:
-        return context.watch<NewComicsBloc>().state;
+      case RecentUpdateComicsBloc:
+        return context.watch<RecentUpdateComicsBloc>().state;
       case BoyComicBloc:
         return context.watch<BoyComicBloc>().state;
       case GirlComicBloc:
@@ -60,8 +60,10 @@ class _PageListComicByBlocState extends State<PageListComicByBloc> {
         context
             .read<CompletedComicBloc>()
             .add(GetCompletedComicsEvent(page: page));
-      case NewComicsBloc:
-        context.read<NewComicsBloc>().add(GetNewComicsEvent(page: page));
+      case RecentUpdateComicsBloc:
+        context
+            .read<RecentUpdateComicsBloc>()
+            .add(GetRecentUpdateComicsEvent(page: page));
       case BoyComicBloc:
         context
             .read<BoyComicBloc>()
@@ -87,8 +89,8 @@ class _PageListComicByBlocState extends State<PageListComicByBloc> {
             return childbody(state);
           },
         );
-      case NewComicsBloc:
-        return BlocBuilder<NewComicsBloc, ComicState>(
+      case RecentUpdateComicsBloc:
+        return BlocBuilder<RecentUpdateComicsBloc, ComicState>(
           builder: (context, state) {
             return childbody(state);
           },
