@@ -1,6 +1,7 @@
-# nettruyen
+# Comic app
 
-Use clean architecture and bloc to build a story reading application.
+Use clean architecture and bloc to build a comic reading app.
+<img src="document\architecture-proposal.png" width="400">
 
 ## Api
 
@@ -8,14 +9,6 @@ Use clean architecture and bloc to build a story reading application.
 
 ## Screens
 
-| 1 | 2|
-|------|-------|
-|<img src="document\home_page.jpg" width="300">|<img src="document\genres_comic_page.jpg" width="300">|
-
-| 3 | 4|
-|------|-------|
-|<img src="document\comic_new_page.jpg" width="300">|<img src="document\top_comic_page.jpg.jpg" width="300">|
-
-<img src="document\infomation_comic_page.jpg" width="300">
+<img src="document\home_page.jpg" width="200"> <img src="document\page_genres.jpg" width="200"> <img src="document\top_comic.jpg" width="200"> <img src="document\list_basis_by_type_comic.jpg" width="200"> <img src="document\information_comic.jpg" width="200"> <img src="document\page_not_found.jpg" width="200">
 
 ## Getting Started

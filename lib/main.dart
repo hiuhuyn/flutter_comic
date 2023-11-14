@@ -74,6 +74,7 @@ class MyApp extends StatelessWidget {
         title: 'Nettruyen',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),

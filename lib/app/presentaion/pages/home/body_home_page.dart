@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/completed_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/girl_comic_bloc.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/new_comic.dart';
+import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/recent_update_comic_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/recommend_comics_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/trending_comics_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
@@ -12,23 +12,24 @@ import 'package:nettruyen/app/presentaion/widgets/failed_widget.dart';
 import 'package:nettruyen/app/presentaion/widgets/grid_view_comics.dart';
 import 'package:nettruyen/app/presentaion/widgets/comic/item_comic_1.dart';
 import 'package:nettruyen/app/presentaion/widgets/loading_widget.dart';
+import 'package:nettruyen/config/routes/routes_name.dart';
 
-class ItemHomePage extends StatefulWidget {
-  const ItemHomePage({super.key});
+class BodyHomePage extends StatefulWidget {
+  const BodyHomePage({super.key});
   static void loadingData(BuildContext context) {
     context.read<RecommendComicsBloc>().add(GetRecommendComicsEvent());
     context.read<TrendingComicsBloc>().add(GetTrendingComicsEvent());
     context.read<CompletedComicBloc>().add(GetCompletedComicsEvent());
-    context.read<NewComicsBloc>().add(GetNewComicsEvent());
+    context.read<RecentUpdateComicsBloc>().add(GetRecentUpdateComicsEvent());
     context.read<BoyComicBloc>().add(GetBoyOrGirlComicsEvent(isBoy: true));
     context.read<GirlComicBloc>().add(GetBoyOrGirlComicsEvent(isBoy: false));
   }
 
   @override
-  State<ItemHomePage> createState() => _ItemHomePageState();
+  State<BodyHomePage> createState() => _BodyHomePageState();
 }
 
-class _ItemHomePageState extends State<ItemHomePage> {
+class _BodyHomePageState extends State<BodyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -102,7 +103,9 @@ class _ItemHomePageState extends State<ItemHomePage> {
                 listValue: state.listComic?.comics ?? [],
                 icon: Icons.local_fire_department_outlined,
                 iconColor: Colors.red,
-                onPressedShowAll: () {},
+                onPressedShowAll: () {
+                  Navigator.pushNamed(context, RoutesName.kPopular);
+                },
                 title: "Truyện nổi bật",
               );
             }
@@ -132,7 +135,9 @@ class _ItemHomePageState extends State<ItemHomePage> {
                 itemCount: itemCount,
                 listValue: state.listComic?.comics ?? [],
                 icon: Icons.verified,
-                onPressedShowAll: () {},
+                onPressedShowAll: () {
+                  Navigator.pushNamed(context, RoutesName.kCompleted);
+                },
                 title: "Truyện đã hoàn thành",
               );
             }
@@ -141,13 +146,14 @@ class _ItemHomePageState extends State<ItemHomePage> {
                   error: state.error!,
                   onReset: () {
                     context
-                        .read<TrendingComicsBloc>()
-                        .add(GetTrendingComicsEvent());
+                        .read<CompletedComicBloc>()
+                        .add(GetCompletedComicsEvent());
                   });
             }
             return const LoadingWidget();
           }),
-          BlocBuilder<NewComicsBloc, ComicState>(builder: (context, state) {
+          BlocBuilder<RecentUpdateComicsBloc, ComicState>(
+              builder: (context, state) {
             if (state is ComicSuccesfull) {
               int itemCount = 0;
               if (state.listComic != null && state.listComic?.comics != null) {
@@ -160,9 +166,11 @@ class _ItemHomePageState extends State<ItemHomePage> {
               return GridViewComics(
                 itemCount: itemCount,
                 listValue: state.listComic?.comics ?? [],
-                icon: Icons.male,
-                iconColor: Colors.blue,
-                onPressedShowAll: () {},
+                icon: Icons.access_time,
+                iconColor: const Color.fromARGB(255, 255, 200, 0),
+                onPressedShowAll: () {
+                  Navigator.pushNamed(context, RoutesName.kRecentUpdate);
+                },
                 title: "Truyện mới cập nhật",
               );
             }
@@ -171,8 +179,8 @@ class _ItemHomePageState extends State<ItemHomePage> {
                   error: state.error!,
                   onReset: () {
                     context
-                        .read<TrendingComicsBloc>()
-                        .add(GetTrendingComicsEvent());
+                        .read<RecentUpdateComicsBloc>()
+                        .add(GetRecentUpdateComicsEvent());
                   });
             }
             return const LoadingWidget();
@@ -192,7 +200,9 @@ class _ItemHomePageState extends State<ItemHomePage> {
                 listValue: state.listComic?.comics ?? [],
                 icon: Icons.male,
                 iconColor: Colors.blue,
-                onPressedShowAll: () {},
+                onPressedShowAll: () {
+                  Navigator.pushNamed(context, RoutesName.kBoy);
+                },
                 title: "Boy",
               );
             }
@@ -201,8 +211,8 @@ class _ItemHomePageState extends State<ItemHomePage> {
                   error: state.error!,
                   onReset: () {
                     context
-                        .read<TrendingComicsBloc>()
-                        .add(GetTrendingComicsEvent());
+                        .read<BoyComicBloc>()
+                        .add(GetBoyOrGirlComicsEvent(isBoy: true));
                   });
             }
             return const LoadingWidget();
@@ -222,7 +232,9 @@ class _ItemHomePageState extends State<ItemHomePage> {
                 listValue: state.listComic?.comics ?? [],
                 icon: Icons.female,
                 iconColor: Colors.pink,
-                onPressedShowAll: () {},
+                onPressedShowAll: () {
+                  Navigator.pushNamed(context, RoutesName.kGirl);
+                },
                 title: "Girl",
               );
             }
@@ -231,8 +243,8 @@ class _ItemHomePageState extends State<ItemHomePage> {
                   error: state.error!,
                   onReset: () {
                     context
-                        .read<TrendingComicsBloc>()
-                        .add(GetTrendingComicsEvent());
+                        .read<GirlComicBloc>()
+                        .add(GetBoyOrGirlComicsEvent(isBoy: false));
                   });
             }
             return const LoadingWidget();

@@ -17,6 +17,7 @@ class _ChapterComicPageState extends State<ChapterComicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("${widget.comicId}\n${widget.chapterId}"),
       ),

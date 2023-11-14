@@ -1,8 +1,6 @@
 class RoutesName {
   static const String kHomePage = "/";
   static const String kGenres = "/genres";
-  static const String kNew = "/new";
-  static const String kTop = "/top";
   static const String kSearch = "/search";
   static const String kPopular = "/popular";
   static const String kCompleted = "/completed";

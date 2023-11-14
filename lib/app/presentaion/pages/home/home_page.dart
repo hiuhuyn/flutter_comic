@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nettruyen/app/presentaion/pages/home/item_genre_page.dart';
-import 'package:nettruyen/app/presentaion/pages/home/item_home_page.dart';
-import 'package:nettruyen/app/presentaion/pages/home/item_newComic_page.dart';
-import 'package:nettruyen/app/presentaion/pages/home/item_topcomic_page.dart';
+import 'package:nettruyen/app/presentaion/pages/genres/body_genre_page.dart';
+import 'package:nettruyen/app/presentaion/pages/home/body_home_page.dart';
+import 'package:nettruyen/app/presentaion/pages/new_comic/body_newComic_page.dart';
+import 'package:nettruyen/app/presentaion/pages/top_comic/body_topcomic_page.dart';
 import 'package:nettruyen/app/presentaion/pages/page_not_found.dart';
 import 'package:nettruyen/app/presentaion/widgets/drawer_home.dart';
 
@@ -15,14 +15,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Widget> _listWidget = [
-    ItemHomePage(key: UniqueKey()),
-    ItemGenrePage(
+    BodyHomePage(key: UniqueKey()),
+    BodyGenrePage(
       key: UniqueKey(),
     ),
-    ItemNewComicPage(
+    BodyNewComicPage(
       key: UniqueKey(),
     ),
-    ItemTopComicPage(
+    BodyTopComicPage(
       key: UniqueKey(),
     )
   ];
@@ -37,8 +37,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
           title: Text(
             "Nettruyen clone",
             style: TextStyle(
@@ -48,22 +48,22 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   switch (_widgetBody.runtimeType) {
-                    case ItemHomePage:
-                      ItemHomePage.loadingData(context);
+                    case BodyHomePage:
+                      BodyHomePage.loadingData(context);
                       break;
-                    case ItemGenrePage:
+                    case BodyGenrePage:
                       setState(() {
-                        _widgetBody = ItemGenrePage(key: UniqueKey());
+                        _widgetBody = BodyGenrePage(key: UniqueKey());
                       });
                       break;
-                    case ItemNewComicPage:
+                    case BodyNewComicPage:
                       setState(() {
-                        _widgetBody = ItemNewComicPage(key: UniqueKey());
+                        _widgetBody = BodyNewComicPage(key: UniqueKey());
                       });
                       break;
-                    case ItemTopComicPage:
+                    case BodyTopComicPage:
                       setState(() {
-                        _widgetBody = ItemTopComicPage(key: UniqueKey());
+                        _widgetBody = BodyTopComicPage(key: UniqueKey());
                       });
                       break;
                   }

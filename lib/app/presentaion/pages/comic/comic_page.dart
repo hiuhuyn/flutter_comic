@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_id_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_state.dart';
-import 'package:nettruyen/app/presentaion/pages/comic_page/body.dart';
-import 'package:nettruyen/app/presentaion/pages/comic_page/heading.dart';
+import 'package:nettruyen/app/presentaion/pages/comic/body.dart';
+import 'package:nettruyen/app/presentaion/pages/comic/heading.dart';
 import 'package:nettruyen/app/presentaion/widgets/failed_widget.dart';
 import 'package:nettruyen/app/presentaion/widgets/loading_widget.dart';
 

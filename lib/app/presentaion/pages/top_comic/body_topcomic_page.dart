@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/domain/models/comic.dart';
-import 'package:nettruyen/app/domain/models/genre.dart';
-import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/comic_by_genre_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/top_comics_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_event.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/comic_state.dart';
@@ -12,14 +10,14 @@ import 'package:nettruyen/app/presentaion/widgets/index_page.dart';
 import 'package:nettruyen/app/presentaion/widgets/loading_widget.dart';
 import 'package:nettruyen/core/constants/constants.dart';
 
-class ItemTopComicPage extends StatefulWidget {
-  const ItemTopComicPage({super.key});
+class BodyTopComicPage extends StatefulWidget {
+  const BodyTopComicPage({super.key});
 
   @override
-  State<ItemTopComicPage> createState() => _ItemTopComicPageState();
+  State<BodyTopComicPage> createState() => _BodyTopComicPageState();
 }
 
-class _ItemTopComicPageState extends State<ItemTopComicPage> {
+class _BodyTopComicPageState extends State<BodyTopComicPage> {
   StatusComic status = StatusComic.all;
   TopType topType = TopType.all;
   int totalPages = 1;

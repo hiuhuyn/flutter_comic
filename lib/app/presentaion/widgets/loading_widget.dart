@@ -5,18 +5,22 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 50,
-        width: 50,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.white),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5)),
-        alignment: Alignment.center,
-        child: const CircularProgressIndicator(
-          color: Colors.blue,
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Container(
+          height: 40,
+          width: 40,
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.grey),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10)),
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(
+            color: Colors.blue,
+          ),
         ),
       ),
     );
