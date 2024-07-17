@@ -93,10 +93,7 @@ class _HeadingComicState extends State<HeadingComic> {
                           size: 15,
                         ),
                         Text(
-                          widget.comic.total_views != null
-                              ? NumberFormat('#,##0', 'en_US')
-                                  .format(widget.comic.total_views!)
-                              : "0",
+                          widget.comic.total_views ?? "0",
                           style: const TextStyle(
                               fontSize: 15, color: Colors.black),
                         )
@@ -110,10 +107,7 @@ class _HeadingComicState extends State<HeadingComic> {
                           size: 15,
                         ),
                         Text(
-                          widget.comic.followers != null
-                              ? NumberFormat('#,##0', 'en_US')
-                                  .format(widget.comic.followers!)
-                              : "0",
+                          widget.comic.followers ?? "0",
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                               fontSize: 15, color: Colors.black),

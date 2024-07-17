@@ -84,8 +84,7 @@ class _ItemComic2State extends State<ItemComic2> {
                             size: 10,
                           ),
                           Text(
-                            formatNumber(widget.comic.total_views ?? 0)
-                                .toString(),
+                            widget.comic.total_views ?? "0",
                             style: const TextStyle(
                                 fontSize: 10, color: Colors.white),
                           )
@@ -99,8 +98,7 @@ class _ItemComic2State extends State<ItemComic2> {
                             size: 10,
                           ),
                           Text(
-                            formatNumber(widget.comic.followers ?? 0)
-                                .toString(),
+                            widget.comic.followers ?? "0",
                             style: const TextStyle(
                                 fontSize: 10, color: Colors.white),
                           )

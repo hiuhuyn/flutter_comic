@@ -1,5 +1,5 @@
 const kBaseURL = "https://comics-api.vercel.app";
-
+// https://comics-api.vercel.app/trending-comics?page=1
 //Popular Comics
 //page: number; // option
 // path: `/trending-comics?page=${page}`;

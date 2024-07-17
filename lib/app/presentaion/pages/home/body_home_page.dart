@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nettruyen/app/presentaion/blocs/remote/comic/blocs/boy_comic_bloc.dart';
@@ -89,6 +91,7 @@ class _BodyHomePageState extends State<BodyHomePage> {
           }),
           BlocBuilder<TrendingComicsBloc, ComicState>(
               builder: (context, state) {
+            log(state.toString());
             if (state is ComicSuccesfull) {
               int itemCount = 0;
               if (state.listComic != null && state.listComic?.comics != null) {
@@ -185,70 +188,70 @@ class _BodyHomePageState extends State<BodyHomePage> {
             }
             return const LoadingWidget();
           }),
-          BlocBuilder<BoyComicBloc, ComicState>(builder: (context, state) {
-            if (state is ComicSuccesfull) {
-              int itemCount = 0;
-              if (state.listComic != null && state.listComic?.comics != null) {
-                if (state.listComic!.comics!.length > 20) {
-                  itemCount = 20;
-                } else {
-                  itemCount = state.listComic!.comics!.length;
-                }
-              }
-              return GridViewComics(
-                itemCount: itemCount,
-                listValue: state.listComic?.comics ?? [],
-                icon: Icons.male,
-                iconColor: Colors.blue,
-                onPressedShowAll: () {
-                  Navigator.pushNamed(context, RoutesName.kBoy);
-                },
-                title: "Boy",
-              );
-            }
-            if (state is ComicFailed) {
-              return FailedWidet(
-                  error: state.error!,
-                  onReset: () {
-                    context
-                        .read<BoyComicBloc>()
-                        .add(GetBoyOrGirlComicsEvent(isBoy: true));
-                  });
-            }
-            return const LoadingWidget();
-          }),
-          BlocBuilder<GirlComicBloc, ComicState>(builder: (context, state) {
-            if (state is ComicSuccesfull) {
-              int itemCount = 0;
-              if (state.listComic != null && state.listComic?.comics != null) {
-                if (state.listComic!.comics!.length > 20) {
-                  itemCount = 20;
-                } else {
-                  itemCount = state.listComic!.comics!.length;
-                }
-              }
-              return GridViewComics(
-                itemCount: itemCount,
-                listValue: state.listComic?.comics ?? [],
-                icon: Icons.female,
-                iconColor: Colors.pink,
-                onPressedShowAll: () {
-                  Navigator.pushNamed(context, RoutesName.kGirl);
-                },
-                title: "Girl",
-              );
-            }
-            if (state is ComicFailed) {
-              return FailedWidet(
-                  error: state.error!,
-                  onReset: () {
-                    context
-                        .read<GirlComicBloc>()
-                        .add(GetBoyOrGirlComicsEvent(isBoy: false));
-                  });
-            }
-            return const LoadingWidget();
-          }),
+          // BlocBuilder<BoyComicBloc, ComicState>(builder: (context, state) {
+          //   if (state is ComicSuccesfull) {
+          //     int itemCount = 0;
+          //     if (state.listComic != null && state.listComic?.comics != null) {
+          //       if (state.listComic!.comics!.length > 20) {
+          //         itemCount = 20;
+          //       } else {
+          //         itemCount = state.listComic!.comics!.length;
+          //       }
+          //     }
+          //     return GridViewComics(
+          //       itemCount: itemCount,
+          //       listValue: state.listComic?.comics ?? [],
+          //       icon: Icons.male,
+          //       iconColor: Colors.blue,
+          //       onPressedShowAll: () {
+          //         Navigator.pushNamed(context, RoutesName.kBoy);
+          //       },
+          //       title: "Boy",
+          //     );
+          //   }
+          //   if (state is ComicFailed) {
+          //     return FailedWidet(
+          //         error: state.error!,
+          //         onReset: () {
+          //           context
+          //               .read<BoyComicBloc>()
+          //               .add(GetBoyOrGirlComicsEvent(isBoy: true));
+          //         });
+          //   }
+          //   return const LoadingWidget();
+          // }),
+          // BlocBuilder<GirlComicBloc, ComicState>(builder: (context, state) {
+          //   if (state is ComicSuccesfull) {
+          //     int itemCount = 0;
+          //     if (state.listComic != null && state.listComic?.comics != null) {
+          //       if (state.listComic!.comics!.length > 20) {
+          //         itemCount = 20;
+          //       } else {
+          //         itemCount = state.listComic!.comics!.length;
+          //       }
+          //     }
+          //     return GridViewComics(
+          //       itemCount: itemCount,
+          //       listValue: state.listComic?.comics ?? [],
+          //       icon: Icons.female,
+          //       iconColor: Colors.pink,
+          //       onPressedShowAll: () {
+          //         Navigator.pushNamed(context, RoutesName.kGirl);
+          //       },
+          //       title: "Girl",
+          //     );
+          //   }
+          //   if (state is ComicFailed) {
+          //     return FailedWidet(
+          //         error: state.error!,
+          //         onReset: () {
+          //           context
+          //               .read<GirlComicBloc>()
+          //               .add(GetBoyOrGirlComicsEvent(isBoy: false));
+          //         });
+          //   }
+          //   return const LoadingWidget();
+          // }),
         ],
       ),
     );

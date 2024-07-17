@@ -55,7 +55,7 @@ class _ItemComic1State extends State<ItemComic1> {
               ),
             ),
             Container(
-              height: 40,
+              height: 30,
               padding: const EdgeInsets.all(5),
               width: double.infinity,
               color: const Color.fromARGB(182, 0, 0, 0),
@@ -63,15 +63,15 @@ class _ItemComic1State extends State<ItemComic1> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.comic.title.toString(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // Text(
+                  //   widget.comic.title.toString(),
+                  //   maxLines: 1,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: const TextStyle(
+                  //       fontSize: 10,
+                  //       color: Colors.white,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
                   Text(
                     widget.comic.last_chapter != null
                         ? widget.comic.last_chapter!.name

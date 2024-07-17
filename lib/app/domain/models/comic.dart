@@ -16,8 +16,8 @@ class ComicEntity extends Equatable {
   String? authors;
   String? status;
   List<String>? other_names;
-  int? total_views;
-  int? followers;
+  String? total_views;
+  String? followers;
   List<ChapterEntity>? chapters;
   List<GenreEntity>? genres;
   ChapterEntity? last_chapter; //
@@ -55,8 +55,8 @@ class ComicEntity extends Equatable {
     String? authors,
     String? status,
     List<String>? other_names,
-    int? total_views,
-    int? followers,
+    String? total_views,
+    String? followers,
     List<ChapterEntity>? chapters,
     List<GenreEntity>? genres,
     ChapterEntity? last_chapter,

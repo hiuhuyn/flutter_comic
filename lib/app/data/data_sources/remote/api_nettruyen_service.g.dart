@@ -15,6 +15,7 @@ class _ApiNettruyenService implements ApiNettruyenService {
     api += page != null ? "?page=$page" : "?page=1";
     final result = await dio.get(api);
     final value = ComicListModel.fromMap(result.data);
+    // final value = ComicListModel(comics: []);
     return HttpResponse(value, result);
   }
 

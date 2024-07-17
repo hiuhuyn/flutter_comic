@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nettruyen/app/domain/models/comic.dart';
 import 'package:nettruyen/app/presentaion/widgets/comic/item_comic_2.dart';
@@ -21,6 +23,7 @@ class GridViewComics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(listValue.toString());
     return Column(
       children: [
         ListTile(
@@ -46,6 +49,7 @@ class GridViewComics extends StatelessWidget {
         ),
         Container(
           height: listValue.isNotEmpty ? 400 : 10,
+          width: double.infinity,
           margin: const EdgeInsets.only(bottom: 20),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

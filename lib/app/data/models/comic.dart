@@ -103,8 +103,8 @@ class ComicModel extends ComicEntity {
       other_names: map['other_names'] != null
           ? List<String>.from(map['other_names'])
           : null,
-      total_views: map['total_views'],
-      followers: map['followers'],
+      total_views: map['total_views'].toString(),
+      followers: map['followers'].toString(),
       is_trending: map['is_trending'],
       last_chapter: lastChapter,
       short_description: map['short_description'],
